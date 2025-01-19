@@ -1,0 +1,40 @@
+String url="https://demoqa.com/alerts";
+	WebDriver driver;
+	//Definimos una instancia de tipo login
+	paginaLogin login;
+
+
+	@BeforeMethod
+	public void setUP() {
+		
+		WebDriverManager.chromedriver().setup();
+		ChromeOptions options=new ChromeOptions();
+		
+		//Usamos un zoom al 80% para hacer click en el botón que queremos hacer click 
+		double zoom = 0.8; 
+		options.addArguments("--force-device-scale-factor="+zoom);
+		driver= new ChromeDriver(options);
+		driver.get(url);
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+	}
+
+	@Test()
+	public void cargarArchivo() {
+		WebElement btnButton=driver.findElement(By.id("alertButton"));
+		btnButton.click();
+		
+		//Creamos una alerta 
+		Alert Alerta=driver.switchTo().alert();
+		Alerta.accept();
+	}
+
+
+	@AfterMethod
+	public void tearDown() {
+		//Se comenta para que se vea el mensaje
+		driver.quit();
+	}
+
+
+}
